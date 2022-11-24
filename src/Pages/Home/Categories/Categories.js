@@ -7,6 +7,7 @@ const Categories = () => {
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await axios.get("http://localhost:5000/categories");
+      console.log(process.env.REACT_APP_BASE_URL);
       return res.data;
     },
   });

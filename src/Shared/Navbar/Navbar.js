@@ -200,7 +200,6 @@ const Navbar = () => {
                     />
                   </>
                 ) : (
-                  
                   <HiUser
                     className="text-4xl tooltip tooltip-bottom"
                     data-tip="Login to see username"
