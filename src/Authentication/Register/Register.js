@@ -1,19 +1,25 @@
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { FaAppStore, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Authcontext } from "../../contexts/AuthProvider";
+import { useToken } from "../../hooks/useToken";
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 const Register = () => {
-  const { loading, createUser, authenticateWithProvider } =
+  const { loading, createUser, authenticateWithProvider, updateUserProfile } =
     useContext(Authcontext);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
-
+  const [createUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createUserEmail);
+  if (token) {
+    navigate("/");
+  }
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -23,37 +29,42 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        const currentUser = {
-          email: user.email,
-        };
+        const userInfo = { displayName: name };
+        updateUserProfile(userInfo)
+          .then(() => {
+            // console.log("done");
+            saveUser(name, email);
+          })
+          .catch((err) => console.log(err));
         console.log(user);
-        //get jwt token
-        // fetch(
-        //   "https://b6a11-service-review-server-side-rohan1279.vercel.app/jwt",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "content-type": "application/json",
-        //     },
-        //     body: JSON.stringify(currentUser),
-        //   }
-        // )
-        //   .then((res) => res.json())
-        //   .then((data) => {
-        //     console.log(data);
-        //     localStorage.setItem("user-token", data.token);
-        //     navigate(from, { replace: true });
-        //   });
       })
       .catch((err) => console.log(err));
   };
   const handleAuthenticate = (provider) => {
     authenticateWithProvider(provider)
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         navigate(from, { replace: true });
       })
       .catch((err) => console.log(err));
+  };
+  const saveUser = (name, email) => {
+    const user = { name, email };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCreatedUserEmail(email);
+        if (data.acknowledged) {
+          toast.success("Acoount created successfully");
+        }
+        console.log(data);
+      });
   };
   return (
     <div>

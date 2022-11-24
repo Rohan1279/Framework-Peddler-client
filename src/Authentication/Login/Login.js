@@ -136,7 +136,7 @@ const Login = () => {
             <p className=" text-center">
               New to Framework Peddler?{" "}
               <Link to={"/register"} className="text-orange-600 font-bold">
-                Sign Up
+                Register
               </Link>
             </p>
           </div>

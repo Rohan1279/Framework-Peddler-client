@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Categories = () => {
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/categories");
-      console.log(process.env.REACT_APP_BASE_URL);
+      const res = await axios.get(`${process.env.REACT_APP_URL}/categories`);
+      console.log();
       return res.data;
     },
   });

@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 export const Authcontext = createContext();
 const auth = getAuth(app);
@@ -17,6 +18,10 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, passoword);
   };
+  const updateUserProfile = (userInfo) => {
+    setLoading(true);
+    return updateProfile(auth.currentUser, userInfo);
+  };
   const login = (email, passoword) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, passoword);
@@ -26,7 +31,7 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
   const logOut = () => {
-    localStorage.removeItem("user-token");
+    localStorage.removeItem("accessToken");
     return signOut(auth);
   };
   useEffect(() => {
@@ -40,6 +45,7 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     createUser,
+    updateUserProfile,
     login,
     authenticateWithProvider,
     logOut,
