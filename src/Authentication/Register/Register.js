@@ -1,5 +1,5 @@
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FaAppStore, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -16,10 +16,14 @@ const Register = () => {
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
   const [createUserEmail, setCreatedUserEmail] = useState("");
+  const [userRole, setUserRole] = useState("Buyer");
   const [token] = useToken(createUserEmail);
+  const buyerRef = useRef();
+  const sellerRef = useRef();
   if (token) {
     navigate("/");
   }
+  console.log(userRole);
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -33,7 +37,7 @@ const Register = () => {
         updateUserProfile(userInfo)
           .then(() => {
             // console.log("done");
-            saveUser(name, email);
+            saveUser(name, email, userRole);
           })
           .catch((err) => console.log(err));
         console.log(user);
@@ -48,8 +52,13 @@ const Register = () => {
       })
       .catch((err) => console.log(err));
   };
-  const saveUser = (name, email) => {
-    const user = { name, email };
+  const handleUserRole = (e) => {
+    // e.preventDefault();
+    console.log(e.target.value);
+    // console.log("hello");
+  };
+  const saveUser = (name, email, userRole) => {
+    const user = { name, email, userRole };
     fetch("http://localhost:5000/users", {
       method: "POST",
       headers: {
@@ -66,6 +75,7 @@ const Register = () => {
         console.log(data);
       });
   };
+
   return (
     <div>
       {loading && (
@@ -119,6 +129,39 @@ const Register = () => {
                   className="input input-bordered"
                   required
                 />
+              </div>
+              {/* user role */}
+              <div className="flex w-full justify-evenly items-center my-3">
+                <div className="form-control">
+                  <label className="label cursor-pointer">
+                    <span className="label-text mx-3 text-xl" ref={buyerRef}>
+                      Buyer
+                    </span>
+                    <input
+                      // onChange={handleUserRole}
+                      onChange={() => setUserRole(buyerRef.current.innerText)}
+                      type="radio"
+                      name="radio-10"
+                      className="radio checked:bg-yellow-500"
+                      // checked
+                      defaultChecked
+                    />
+                  </label>
+                </div>
+                <div className="form-control">
+                  <label className="label cursor-pointer">
+                    <span className="label-text mx-3 text-xl" ref={sellerRef}>
+                      Seller
+                    </span>
+                    <input
+                      // onChange={handleUserRole}
+                      onChange={() => setUserRole(sellerRef.current.innerText)}
+                      type="radio"
+                      name="radio-10"
+                      className="radio checked:bg-fuchsia-500"
+                    />
+                  </label>
+                </div>
               </div>
               <div className="divider ">OR</div>
               <div className="flex  mx-auto gap-x-10">
