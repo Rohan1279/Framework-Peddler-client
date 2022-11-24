@@ -3,6 +3,7 @@ import React, { useContext, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FaAppStore, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import SmallLoader from "../../Components/SmallLoader";
 import { Authcontext } from "../../contexts/AuthProvider";
 import { useToken } from "../../hooks/useToken";
 
@@ -10,22 +11,23 @@ const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 const Register = () => {
-  const { loading, createUser, authenticateWithProvider, updateUserProfile } =
+  const { createUser, authenticateWithProvider, updateUserProfile } =
     useContext(Authcontext);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
   const [createUserEmail, setCreatedUserEmail] = useState("");
-  const [userRole, setUserRole] = useState("Buyer");
   const [token] = useToken(createUserEmail);
+  const [userRole, setUserRole] = useState("Buyer");
+  const [isLoading, setIsLoading] = useState(false);
   const buyerRef = useRef();
   const sellerRef = useRef();
   if (token) {
     navigate("/");
   }
-  console.log(userRole);
   const handleRegister = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
@@ -36,7 +38,6 @@ const Register = () => {
         const userInfo = { displayName: name };
         updateUserProfile(userInfo)
           .then(() => {
-            // console.log("done");
             saveUser(name, email, userRole);
           })
           .catch((err) => console.log(err));
@@ -47,16 +48,12 @@ const Register = () => {
   const handleAuthenticate = (provider) => {
     authenticateWithProvider(provider)
       .then((result) => {
-        // console.log(result.user);
-        navigate(from, { replace: true });
+        console.log(result.user);
+        saveUser(result?.user.displayName, result?.user.email, userRole);
       })
       .catch((err) => console.log(err));
   };
-  const handleUserRole = (e) => {
-    // e.preventDefault();
-    console.log(e.target.value);
-    // console.log("hello");
-  };
+
   const saveUser = (name, email, userRole) => {
     const user = { name, email, userRole };
     fetch("http://localhost:5000/users", {
@@ -71,6 +68,8 @@ const Register = () => {
         setCreatedUserEmail(email);
         if (data.acknowledged) {
           toast.success("Acoount created successfully");
+          setIsLoading(false);
+          navigate(from, { replace: true });
         }
         console.log(data);
       });
@@ -78,15 +77,6 @@ const Register = () => {
 
   return (
     <div>
-      {loading && (
-        <>
-          <div className="flex items-center justify-center space-x-2 my-10">
-            <div className="w-4 h-4 rounded-full animate-pulse dark:bg-white-400"></div>
-            <div className="w-4 h-4 rounded-full animate-pulse dark:bg-white-400"></div>
-            <div className="w-4 h-4 rounded-full animate-pulse dark:bg-white-400"></div>
-          </div>
-        </>
-      )}
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col ">
           <div className="text-center lg:text-left">
@@ -174,12 +164,18 @@ const Register = () => {
                   onClick={() => handleAuthenticate(githubProvider)}
                 />
               </div>
-              <div className="form-control mt-6">
-                <input
-                  type="submit"
-                  value="Register"
-                  className="btn btn-primary"
-                />
+              <div className="form-control mt-6 ">
+                <button className="btn btn-primary">
+                  {isLoading ? (
+                    <SmallLoader />
+                  ) : (
+                    <input
+                      type="submit"
+                      value="Register"
+                      className="text-base"
+                    />
+                  )}
+                </button>
               </div>
             </form>
             <p className=" text-center">
