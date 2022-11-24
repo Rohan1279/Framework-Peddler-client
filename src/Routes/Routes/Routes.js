@@ -7,7 +7,7 @@ import ErrorPage from "../../Shared/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/", 
     element: <Main />,
     errorElement: <ErrorPage />,
     children: [
