@@ -1,13 +1,18 @@
 import { useContext } from "react";
-import { Link, useRouteError } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate, useRouteError } from "react-router-dom";
 import { Authcontext } from "../../contexts/AuthProvider";
 
 const ErrorPage = () => {
   const error = useRouteError();
   const { logOut } = useContext(Authcontext);
+  const navigate = useNavigate();
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        navigate("/");
+        toast.success("Logged out successfully!");
+      })
       .catch((err) => console.log(err));
   };
   return (
@@ -29,7 +34,10 @@ const ErrorPage = () => {
           </Link>
           <div className="divider">Or</div>
           <p>
-            <button className="btn btn-primary" onClick={handleLogOut}>
+            <button
+              className="btn btn-primary btn-xs mx-3"
+              onClick={handleLogOut}
+            >
               Sign Out
             </button>
             and Sign in again

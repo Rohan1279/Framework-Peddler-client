@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import toast from "react-hot-toast";
 import { HiUser } from "react-icons/hi";
 import { Link, NavLink } from "react-router-dom";
 import { Authcontext } from "../../contexts/AuthProvider";
@@ -36,12 +37,12 @@ const Navbar = () => {
                   Main
                 </Link>
               </li>
-              {/* <li>
-                <Link className="px-1 py-2" to={"/services"}>
-                  Services
+              <li>
+                <Link className="px-1 py-2" to={"/dashboard"}>
+                  Dashboard
                 </Link>
-              </li> */}
-              {user?.email && (
+              </li>
+              {/* {user?.email && (
                 <>
                   <li>
                     <Link className="px-1 py-2" to={"/myreview"}>
@@ -54,7 +55,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                 </>
-              )}
+              )} */}
               <li>
                 <Link className="px-1 py-2" to={"/blog"}>
                   Blog
@@ -86,32 +87,16 @@ const Navbar = () => {
             >
               Main
             </NavLink>
-            {/* <NavLink
-              to={"/services"}
-              className={({ isActive }) =>
-                isActive ? "text-xl mx-5 " : "text-xl mx-5"
-              }
-            >
-              <li>Services</li>
-            </NavLink> */}
+
             {user?.email && (
               <>
-                {" "}
                 <NavLink
-                  to={"/myreview"}
+                  to={"/dashboard"}
                   className={({ isActive }) =>
                     isActive ? "text-xl mx-5 " : "text-xl mx-5"
                   }
                 >
-                  <li>My reviews</li>
-                </NavLink>
-                <NavLink
-                  to={"/addservice"}
-                  className={({ isActive }) =>
-                    isActive ? "text-xl mx-5 " : "text-xl mx-5"
-                  }
-                >
-                  <li>Add service</li>
+                  <li>Dashboard</li>
                 </NavLink>
               </>
             )}
@@ -220,7 +205,14 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link onClick={() => logOut()} to={"/"}>
+                    <Link
+                      onClick={() =>
+                        logOut().then(() =>
+                          toast.success("Logged out successfully!")
+                        )
+                      }
+                      to={"/"}
+                    >
                       Logout
                     </Link>
                   </li>

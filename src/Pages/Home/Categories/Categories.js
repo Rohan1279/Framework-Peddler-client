@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const { data: categories = [] } = useQuery({
@@ -19,21 +20,23 @@ const Categories = () => {
       </h2>
       <div className="grid grid-cols-3">
         {categories?.map((category) => (
-          <div
-            key={category._id}
-            className="card rounded-none w-72 bg-base-100 shadow-xl mx-auto"
-          >
-            <figure>
-              <img
-                src={category.categoryImage}
-                alt="Category"
-                className="hover:scale-105 brightness-90 hover:brightness-110 transition-all duration-300"
-              />
-            </figure>
-            <div className="card-body p-2 ">
-              <h2 className="card-title mx-auto">{category.categoryName}</h2>
+          <Link to={`/category/${category._id}`}>
+            <div
+              key={category._id}
+              className="card rounded-none w-72 bg-base-100 shadow-xl mx-auto hover:cursor-pointer"
+            >
+              <figure>
+                <img
+                  src={category.categoryImage}
+                  alt="Category"
+                  className="hover:scale-105  brightness-90 hover:brightness-110 transition-all duration-300"
+                />
+              </figure>
+              <div className="card-body p-2 ">
+                <h2 className="card-title mx-auto">{category.categoryName}</h2>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
