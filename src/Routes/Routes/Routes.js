@@ -6,6 +6,7 @@ import Blog from "../../Pages/Blog/Blog";
 import CategoryProducts from "../../Pages/Home/Categories/CategoryProducts";
 import Home from "../../Pages/Home/Home/Home";
 import ErrorPage from "../../Shared/ErrorPage/ErrorPage";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -33,7 +34,11 @@ export const router = createBrowserRouter([
         path: "/category/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:5000/category/${params.id}`),
-        element: <CategoryProducts />,
+        element: (
+          <ProtectedRoute>
+            <CategoryProducts />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
