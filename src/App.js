@@ -7,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App max-w-7xl mx-auto">
       <AuthProvider>
         <RouterProvider router={router} />
         <Toaster />

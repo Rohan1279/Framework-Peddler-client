@@ -7,7 +7,7 @@ const Navbar = () => {
   const { user, logOut } = useContext(Authcontext);
 
   return (
-    <div className="px-1">
+    <div className="">
       <div className="navbar bg-inherit">
         <div className="navbar-start">
           <div className="dropdown">
@@ -36,11 +36,11 @@ const Navbar = () => {
                   Main
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link className="px-1 py-2" to={"/services"}>
                   Services
                 </Link>
-              </li>
+              </li> */}
               {user?.email && (
                 <>
                   <li>
@@ -86,14 +86,14 @@ const Navbar = () => {
             >
               Main
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to={"/services"}
               className={({ isActive }) =>
                 isActive ? "text-xl mx-5 " : "text-xl mx-5"
               }
             >
               <li>Services</li>
-            </NavLink>
+            </NavLink> */}
             {user?.email && (
               <>
                 {" "}
@@ -200,6 +200,7 @@ const Navbar = () => {
                     />
                   </>
                 ) : (
+                  
                   <HiUser
                     className="text-4xl tooltip tooltip-bottom"
                     data-tip="Login to see username"
