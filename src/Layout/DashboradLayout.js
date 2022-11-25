@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { Authcontext } from "../contexts/AuthProvider";
+import useBuyer from "../hooks/userBuyer";
 import Navbar from "../Shared/Navbar/Navbar";
 
 const DashboradLayout = () => {
+  const { user } = useContext(Authcontext);
+  const [isBuyer, isBuyerLoading] = useBuyer(user?.email);
+
   return (
     <div>
       <Navbar />
@@ -19,9 +24,13 @@ const DashboradLayout = () => {
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 text-base-content">
             {/* Sidebar content here  */}
-            <li>
-              <Link to={"/dashboard"}>My Orders</Link>
-            </li>
+            
+            {isBuyer && (
+              <li>
+                <Link to={"/dashboard/myorders"} >My Orders</Link>
+              </li>
+            )}
+
             {/* {isAdmin && (
               <>
                 <li>

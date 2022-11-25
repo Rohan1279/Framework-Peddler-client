@@ -8,6 +8,7 @@ import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
 import CategoryProducts from "../../Pages/Home/Categories/CategoryProducts";
 import Home from "../../Pages/Home/Home/Home";
 import ErrorPage from "../../Shared/ErrorPage/ErrorPage";
+import BuyerRoute from "../BuyerRoute/BuyerRoute";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 
 export const router = createBrowserRouter([
@@ -54,8 +55,12 @@ export const router = createBrowserRouter([
 
     children: [
       {
-        path: "/dashboard",
-        element: <MyOrders />,
+        path: "/dashboard/myorders",
+        element: (
+          <BuyerRoute>
+            <MyOrders />
+          </BuyerRoute>
+        ),
       },
     ],
   },
