@@ -15,6 +15,7 @@ const MyOrders = () => {
         },
       }).then((res) => res.json()),
   });
+  console.log(orders)
   return (
     <div>
       <h3 className="text-3xl mb-5">My Appoinmetns</h3>

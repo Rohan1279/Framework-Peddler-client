@@ -49,10 +49,8 @@ const Login = () => {
     authenticateWithProvider(provider)
       .then((result) => {
         const user = result.user;
-        const currentUser = {
-          email: user.email,
-        };
         console.log(user);
+        saveUser(result?.user.displayName, result?.user.email, "Buyer");
         //get jwt token
         // fetch(
         //   "https://b6a11-service-review-server-side-rohan1279.vercel.app/jwt",
@@ -73,7 +71,17 @@ const Login = () => {
       })
       .catch((err) => console.log(err));
   };
-
+  const saveUser = (name, email, userRole) => {
+    const user = { name, email, userRole };
+    console.log(user);
+    // fetch(`${process.env.REACT_APP_URL}/users`, {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(user),
+    // });
+  };
   return (
     <div>
       {loading && (
