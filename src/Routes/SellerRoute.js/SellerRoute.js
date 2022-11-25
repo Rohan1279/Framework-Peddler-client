@@ -1,21 +1,20 @@
-import { isAdmin } from "@firebase/util";
 import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import Loader from "../../Components/Loader";
 import { Authcontext } from "../../contexts/AuthProvider";
-import useBuyer from "../../hooks/userBuyer";
+import useSeller from "../../hooks/useSeller";
 
-const BuyerRoute = ({ children }) => {
+const SellerRoute = ({ children }) => {
   const { user, loading } = useContext(Authcontext);
-  const [isBuyer, isBuyerLoading] = useBuyer(user?.email);
+  const [isSeller, isSellerLoading] = useSeller(user?.email);
   const location = useLocation();
-  if (loading || isBuyerLoading) {
+  if (loading || isSellerLoading) {
     return <Loader />;
   }
-  if (user && isBuyer) {
+  if (user && isSeller) {
     return children;
   }
   return <Navigate to={"/login"} state={{ from: location }} replace></Navigate>;
 };
 
-export default BuyerRoute;
+export default SellerRoute;
