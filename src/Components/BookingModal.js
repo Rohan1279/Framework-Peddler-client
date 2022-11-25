@@ -23,8 +23,8 @@ const BookingModal = ({ product, setProduct }) => {
     };
     setProduct(null);
     console.log(order);
-
-    fetch("http://localhost:5000/orders", {
+    // ${process.env.REACT_APP_URL}
+    fetch(`${process.env.REACT_APP_URL}/orders`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(order),

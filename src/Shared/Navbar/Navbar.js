@@ -73,7 +73,7 @@ const Navbar = () => {
                 alt=""
                 className="w-12 h-12 rounded-full  mr-2"
               /> */}
-              <p className="font-bold font">Web Dev Untangled</p>
+              <p className="font-bold font">Framework Peddler</p>
             </div>
           </Link>
         </div>
@@ -122,7 +122,7 @@ const Navbar = () => {
                 alt=""
                 className="w-12 h-12 rounded-full mr-2 hidden lg:block"
               /> */}
-              <p className="font-bold">Web Dev Untangled</p>
+              <p className="font-bold">Framework Peddler</p>
             </div>
           </Link>
         </div>

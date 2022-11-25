@@ -15,10 +15,9 @@ const MyOrders = () => {
         },
       }).then((res) => res.json()),
   });
-  console.log(orders)
   return (
     <div>
-      <h3 className="text-3xl mb-5">My Appoinmetns</h3>
+      <h3 className="text-3xl mb-5">My Orders</h3>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
@@ -34,9 +33,15 @@ const MyOrders = () => {
             {orders?.map((order, idx) => (
               <tr key={order._id}>
                 <th>{idx + 1}</th>
-                <td>{order.patient}</td>
-                <td>{order.treatment}</td>
-                <td>{order.slot}</td>
+                <td>
+                  <div className="avatar placeholder">
+                    <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
+                      <img src={order.image} alt="" />
+                    </div>
+                  </div>
+                </td>
+                <td>{order.product_name}</td>
+                <td>${order.price}</td>
                 <td>
                   {order.price && !order.paid && (
                     <Link to={`/dashboard/payment/${order._id}`}>
