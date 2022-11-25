@@ -18,13 +18,10 @@ const Categories = () => {
       <h2 className="text-3xl py-8 text-center font-bold">
         Browse Categories: {categories.length}
       </h2>
-      <div className="grid grid-cols-3">
+      <div className="grid lg:grid-cols-3">
         {categories?.map((category) => (
-          <Link to={`/category/${category._id}`}>
-            <div
-              key={category._id}
-              className="card rounded-none w-72 bg-base-100 shadow-xl mx-auto hover:cursor-pointer"
-            >
+          <Link key={category._id} to={`/category/${category._id}`}>
+            <div className="card rounded-none w-72 bg-base-100 shadow-xl mx-auto hover:cursor-pointer">
               <figure>
                 <img
                   src={category.categoryImage}
