@@ -4,14 +4,19 @@ import Register from "../../Authentication/Register/Register";
 import DashboradLayout from "../../Layout/DashboradLayout";
 import Main from "../../Layout/Main";
 import Blog from "../../Pages/Blog/Blog";
-import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
-import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
+import AddProduct from "../../Pages/Dashboard/SellerDashboard/AddProduct/AddProduct";
+import MyOrders from "../../Pages/Dashboard/BuyerDashboard/MyOrders/MyOrders";
 import CategoryProducts from "../../Pages/Home/Categories/CategoryProducts";
 import Home from "../../Pages/Home/Home/Home";
 import ErrorPage from "../../Shared/ErrorPage/ErrorPage";
 import BuyerRoute from "../BuyerRoute/BuyerRoute";
-import SellerRoute from "../SellerRoute.js/SellerRoute";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import MyProducts from "../../Pages/Dashboard/SellerDashboard/MyProducts/MyProducts";
+import SellerRoute from "../SellerRoute.js/SellerRoute";
+import AdminRoute from "../AdminRoute/AdminRoute";
+import AllBuyers from "../../Pages/Dashboard/AdminDashboard/AllBuyers/AllBuyers";
+import AllSellers from "../../Pages/Dashboard/AdminDashboard/AllSellers/AllSellers";
+import ReportedItems from "../../Pages/Dashboard/AdminDashboard/ReportedItems/ReportedItems";
 
 export const router = createBrowserRouter([
   {
@@ -70,6 +75,38 @@ export const router = createBrowserRouter([
           <SellerRoute>
             <AddProduct />
           </SellerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/myproducts",
+        element: (
+          <SellerRoute>
+            <MyProducts />
+          </SellerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/allsellers",
+        element: (
+          <AdminRoute>
+            <AllSellers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/allbuyers",
+        element: (
+          <AdminRoute>
+            <AllBuyers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/reporteditems",
+        element: (
+          <AdminRoute>
+            <ReportedItems />
+          </AdminRoute>
         ),
       },
     ],

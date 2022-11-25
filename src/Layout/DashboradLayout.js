@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
 import { Authcontext } from "../contexts/AuthProvider";
+import useAdmin from "../hooks/useAdmin";
 import useBuyer from "../hooks/userBuyer";
 import useSeller from "../hooks/useSeller";
 import Navbar from "../Shared/Navbar/Navbar";
 
 const DashboradLayout = () => {
   const { user } = useContext(Authcontext);
-  const [isBuyer, isBuyerLoading] = useBuyer(user?.email);
+  const [isBuyer] = useBuyer(user?.email);
   const [isSeller] = useSeller(user?.email);
+  const [isAdmin] = useAdmin(user?.email);
   return (
     <div>
       <Navbar />
@@ -32,23 +34,28 @@ const DashboradLayout = () => {
               </li>
             )}
             {isSeller && (
-              <li>
-                <Link to={"/dashboard/addproduct"}>Add a product</Link>
-              </li>
-            )}
-            {/* {isAdmin && (
               <>
                 <li>
-                  <Link to={"/dashboard/allusers"}>All Users</Link>
+                  <Link to={"/dashboard/addproduct"}>Add a product</Link>
                 </li>
                 <li>
-                  <Link to={"/dashboard/adddoctor"}>Add a doctor</Link>
-                </li>
-                <li>
-                  <Link to={"/dashboard/managedoctors"}>Manage Doctors</Link>
+                  <Link to={"/dashboard/myproducts"}>My Products</Link>
                 </li>
               </>
-            )} */}
+            )}
+            {isAdmin && (
+              <>
+                <li>
+                  <Link to={"/dashboard/allsellers"}>All Sellers</Link>
+                </li>
+                <li>
+                  <Link to={"/dashboard/allbuyers"}>All Buyers</Link>
+                </li>
+                <li>
+                  <Link to={"/dashboard/reporteditems"}>Reported Items</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
