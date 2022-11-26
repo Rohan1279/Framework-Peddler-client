@@ -102,7 +102,7 @@ const BookingModal = ({ product, setProduct }) => {
             </div>
             <input
               type="submit"
-              className="input w-full input-bordered btn btn-accent"
+              className="input w-full input-bordered btn btn-accent "
               value="Submit"
             />
           </form>
