@@ -3,6 +3,7 @@ import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { Authcontext } from "../../contexts/AuthProvider";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
@@ -43,7 +44,7 @@ const Login = () => {
         //     navigate(from, { replace: true });
         //   });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err.message));
   };
   const handleAuthenticate = (provider) => {
     authenticateWithProvider(provider)
