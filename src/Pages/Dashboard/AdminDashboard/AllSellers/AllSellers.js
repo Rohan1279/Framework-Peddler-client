@@ -1,7 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const AllSellers = () => {
+  const [sellerVerification, setSellerVerification] = useState(false);
+
+  // useEffect(() => {
+  //   fetch(`${process.env.REACT_APP_URL}/users/seller/${seller_email}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log();
+  //       setSellerVerification(data.user.isSellerVerified);
+  //     });
+  // }, [seller_email]);
+
   const url = `${process.env.REACT_APP_URL}/users/allsellers`;
   const { data: allsellers = [] } = useQuery({
     queryKey: ["allsellers"],
@@ -48,6 +59,7 @@ const AllSellers = () => {
                     >
                       Delete
                     </button>
+
                     <button className="btn btn-xs btn-info">Verify</button>
                   </div>
                 </td>

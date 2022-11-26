@@ -42,7 +42,10 @@ const Register = () => {
           .catch((err) => console.log(err));
         // console.log(user);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        toast.error(err.message);
+        setIsLoading(false);
+      });
   };
   const handleAuthenticate = (provider) => {
     authenticateWithProvider(provider)
@@ -50,7 +53,9 @@ const Register = () => {
         console.log(result.user);
         saveUser(result?.user.displayName, result?.user.email, userRole);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const saveUser = (name, email, userRole) => {

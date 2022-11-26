@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaAmazon, FaCheck, FaCheckCircle } from "react-icons/fa";
-import {
-  FaLocationArrow,
-  HiArrowRight,
-  HiCheck,
-  HiClock,
-  HiLocationMarker,
-} from "react-icons/hi";
+import { HiClock, HiLocationMarker } from "react-icons/hi";
 import BookingModal from "./BookingModal";
 
 const ProductCard = ({ product, setProduct }) => {
+  const [sellerVerification, setSellerVerification] = useState(false);
+
   const {
     category_name,
     picture,
@@ -22,11 +18,20 @@ const ProductCard = ({ product, setProduct }) => {
     description,
     posted_on,
     condition,
+    seller_email,
     seller_name,
     seller_default_image,
-    isVerified,
+    // isVerified,
   } = product;
-
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_URL}/users/seller/${seller_email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log();
+        setSellerVerification(data.user.isSellerVerified);
+      });
+  }, [seller_email]);
+  // console.log(sellerVerification);
   return (
     <div className="card lg:card-side shadow-xl rounded-none">
       <figure className="lg:w-1/3 ">
@@ -53,7 +58,7 @@ const ProductCard = ({ product, setProduct }) => {
             </div>
 
             <p className="text-2xl mr-3">{seller_name}</p>
-            {isVerified && <FaCheckCircle className="text-blue-400" />}
+            {sellerVerification && <FaCheckCircle className="text-blue-400" />}
           </div>
           <p className="text-lg badge badge-info px-2 py-3">
             Purchased on: <span className="font-bold">{year_purchased}</span>

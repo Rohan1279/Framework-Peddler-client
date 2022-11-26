@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,14 @@ const AddProduct = () => {
   // 637eb96cdd59c8779cf07ba7
   // 637eb96cdd59c8779cf07ba8
   // 637eb96cdd59c8779cf07ba9
-  const handleAddOrder = (data) => {
+  const [sellerInfo, SetsellerInfo] = useState([])
+  useEffect(() => {
+    
+  
+    
+  }, [])
+  
+  const handleAddProduct = (data) => {
     setIsLoading(true);
     let category_id = "637eb96cdd59c8779cf07ba7";
     if (data.category_name === "Network Modules") {
@@ -51,7 +58,7 @@ const AddProduct = () => {
       seller_email: user?.email,
       seller_default_image:
         "https://static.vecteezy.com/system/resources/thumbnails/009/312/919/small/3d-render-cute-girl-sit-crossed-legs-hold-laptop-studying-at-home-png.png",
-      isVerified: false,
+      // isVerified: false,
     };
     // console.log(product);
     fetch(`${process.env.REACT_APP_URL}/products`, {
@@ -75,7 +82,7 @@ const AddProduct = () => {
     <div className="max-w-3xl mx-auto">
       <h3 className="text-3xl text-center">Add a product</h3>
       <form
-        onSubmit={handleSubmit(handleAddOrder)}
+        onSubmit={handleSubmit(handleAddProduct)}
         className="grid grid-cols-2 gap-3 mt-10 "
       >
         <input
@@ -193,7 +200,7 @@ const AddProduct = () => {
           type="text"
           // defaultValue={product?.resale_price}
           placeholder="provide a photo URL of your product"
-          maxLength={4}
+         
           className="input  input-bordered  text-center col-span-2"
           // required
         />
