@@ -13,9 +13,7 @@ const githubProvider = new GithubAuthProvider();
 const Register = () => {
   const { createUser, authenticateWithProvider, updateUserProfile } =
     useContext(Authcontext);
-  const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
   const [createUserEmail, setCreatedUserEmail] = useState("");
   const [token] = useToken(createUserEmail);
   const [userRole, setUserRole] = useState("Buyer");
@@ -23,6 +21,7 @@ const Register = () => {
   const buyerRef = useRef();
   const sellerRef = useRef();
   if (token) {
+    console.log(token);
     navigate("/");
   }
   const handleRegister = (e) => {
@@ -41,7 +40,7 @@ const Register = () => {
             saveUser(name, email, userRole);
           })
           .catch((err) => console.log(err));
-        console.log(user);
+        // console.log(user);
       })
       .catch((err) => console.log(err));
   };
@@ -67,9 +66,8 @@ const Register = () => {
       .then((data) => {
         setCreatedUserEmail(email);
         if (data.acknowledged) {
-          toast.success("Acoount created successfully");
+          toast.success("Account created successfully");
           setIsLoading(false);
-          navigate(from, { replace: true });
         }
         console.log(data);
       });

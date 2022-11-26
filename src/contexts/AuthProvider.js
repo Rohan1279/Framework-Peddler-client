@@ -19,6 +19,7 @@ const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, passoword);
   };
   const updateUserProfile = (userInfo) => {
+    console.log(userInfo);
     setLoading(true);
     return updateProfile(auth.currentUser, userInfo);
   };

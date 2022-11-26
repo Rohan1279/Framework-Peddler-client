@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import SmallLoader from "../../../../Components/SmallLoader";
 import { Authcontext } from "../../../../contexts/AuthProvider";
 
 const AddProduct = () => {
   const { user } = useContext(Authcontext);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -16,6 +19,7 @@ const AddProduct = () => {
   // 637eb96cdd59c8779cf07ba8
   // 637eb96cdd59c8779cf07ba9
   const handleAddOrder = (data) => {
+    setIsLoading(true);
     let category_id = "637eb96cdd59c8779cf07ba7";
     if (data.category_name === "Network Modules") {
       category_id = "637eb96cdd59c8779cf07ba8";
@@ -49,7 +53,7 @@ const AddProduct = () => {
         "https://static.vecteezy.com/system/resources/thumbnails/009/312/919/small/3d-render-cute-girl-sit-crossed-legs-hold-laptop-studying-at-home-png.png",
       isVerified: false,
     };
-    console.log(product);
+    // console.log(product);
     fetch(`${process.env.REACT_APP_URL}/products`, {
       method: "POST",
       headers: {
@@ -60,7 +64,7 @@ const AddProduct = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         if (result.acknowledged) {
           toast.success(`${data.product_name}'s data added successfully`);
           navigate("/dashboard/myproducts");
@@ -193,11 +197,9 @@ const AddProduct = () => {
           className="input  input-bordered  text-center col-span-2"
           // required
         />
-        <input
-          type="submit"
-          className="input  input-bordered btn btn-accent col-span-2"
-          value="Submit"
-        />
+        <button className="btn btn-accent col-span-2">
+          {isLoading ? <SmallLoader /> : <input type="submit" value="Submit" />}
+        </button>
       </form>
     </div>
   );
