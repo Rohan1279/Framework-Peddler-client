@@ -34,6 +34,7 @@ const ProductCard = ({ product, setProduct }) => {
   // console.log(sellerVerification);
   return (
     <div className="card lg:card-side shadow-xl rounded-none">
+
       <figure className="lg:w-1/3 ">
         <img src={picture} alt="Album" className="w-[400px] h-[400px]" />
       </figure>

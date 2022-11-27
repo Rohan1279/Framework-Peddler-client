@@ -20,13 +20,25 @@ const Categories = () => {
       </h2>
       <div className="grid lg:grid-cols-3">
         {categories?.map((category) => (
-          <Link key={category._id} to={`/category/${category._id}`}>
-            <div className="card rounded-none w-72 bg-base-100 shadow-xl mx-auto hover:cursor-pointer">
-              <figure>
+          <Link
+            key={category._id}
+            to={`/category/${category._id}`}
+            className="hover:cursor-default"
+          >
+            <div className="card rounded-none w-72 bg-base-100 shadow-xl mx-auto ">
+              <div
+                className={`w-full h-full absolute bg-gray-700/80 z-10 opacity-0 
+              hover:opacity-100 transition-all duration-300 flex justify-center items-end`}
+              >
+                <button className="btn btn-sm hover:cursor-pointer mb-10">
+                  Discover more
+                </button>
+              </div>
+              <figure className="z-0">
                 <img
                   src={category.categoryImage}
                   alt="Category"
-                  className="hover:scale-105  brightness-90 hover:brightness-110 transition-all duration-300"
+                  className={`hover:scale-105  brightness-90 hover:brightness-110 transition-all duration-300`}
                 />
               </figure>
               <div className="card-body p-2 ">

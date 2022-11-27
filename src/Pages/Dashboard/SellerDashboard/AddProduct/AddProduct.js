@@ -18,13 +18,9 @@ const AddProduct = () => {
   // 637eb96cdd59c8779cf07ba7
   // 637eb96cdd59c8779cf07ba8
   // 637eb96cdd59c8779cf07ba9
-  const [sellerInfo, SetsellerInfo] = useState([])
-  useEffect(() => {
-    
-  
-    
-  }, [])
-  
+  const [sellerInfo, SetsellerInfo] = useState([]);
+  useEffect(() => {}, []);
+
   const handleAddProduct = (data) => {
     setIsLoading(true);
     let category_id = "637eb96cdd59c8779cf07ba7";
@@ -71,7 +67,7 @@ const AddProduct = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        // console.log(result);
+        console.log(result);
         if (result.acknowledged) {
           toast.success(`${data.product_name}'s data added successfully`);
           navigate("/dashboard/myproducts");
@@ -110,7 +106,7 @@ const AddProduct = () => {
           {...register("condition")}
           className="select select-bordered w-full text-base"
         >
-          <option disabled selected className="text-green-400">
+          <option disabled defaultChecked className="text-green-400">
             Pick product condition
           </option>
           <option>excellent</option>
@@ -121,7 +117,7 @@ const AddProduct = () => {
           {...register("category_name")}
           className="select select-bordered w-full text-base"
         >
-          <option disabled selected className="text-green-400">
+          <option disabled defaultChecked className="text-green-400">
             Choose a category
           </option>
           <option>Network Modules</option>
@@ -200,7 +196,6 @@ const AddProduct = () => {
           type="text"
           // defaultValue={product?.resale_price}
           placeholder="provide a photo URL of your product"
-         
           className="input  input-bordered  text-center col-span-2"
           // required
         />

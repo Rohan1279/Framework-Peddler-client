@@ -8,7 +8,7 @@ const useSeller = (email) => {
       fetch(`${process.env.REACT_APP_URL}/users/seller/${email}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setIsSeller(data.isSeller);
           setIsSellerLoading(false);
         });

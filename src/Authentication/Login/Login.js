@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { Authcontext } from "../../contexts/AuthProvider";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useToken } from "../../hooks/useToken";
+import SmallLoader from "../../Components/SmallLoader";
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
@@ -13,38 +15,32 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
+  const [createUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createUserEmail);
+  const [isLoading, setIsLoading] = useState(false);
 
+  if (token) {
+    navigate(from, { replace: true });
+  }
   const handleLogin = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     login(email, password)
       .then((result) => {
         const user = result.user;
+        setCreatedUserEmail(user.email);
         const currentUser = {
           email: user.email,
         };
-        console.log(user);
-        //get jwt token
-        // fetch(
-        //   "https://b6a11-service-review-server-side-rohan1279.vercel.app/jwt",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "content-type": "application/json",
-        //     },
-        //     body: JSON.stringify(currentUser),
-        //   }
-        // )
-        //   .then((res) => res.json())
-        //   .then((data) => {
-        //     console.log(data);
-        //     localStorage.setItem("user-token", data.token);
-        //     navigate(from, { replace: true });
-        //   });
+        toast.success("Login successfull");
       })
-      .catch((err) => toast.error(err.message));
+      .catch((err) => {
+        toast.error(err.message);
+        setIsLoading(false);
+      });
   };
   const handleAuthenticate = (provider) => {
     authenticateWithProvider(provider)
@@ -52,23 +48,6 @@ const Login = () => {
         const user = result.user;
         console.log(user);
         saveUser(result?.user.displayName, result?.user.email, "Buyer");
-        //get jwt token
-        // fetch(
-        //   "https://b6a11-service-review-server-side-rohan1279.vercel.app/jwt",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "content-type": "application/json",
-        //     },
-        //     body: JSON.stringify(currentUser),
-        //   }
-        // )
-        //   .then((res) => res.json())
-        //   .then((data) => {
-        //     console.log(data);
-        //     localStorage.setItem("user-token", data.token);
-        //     navigate(from, { replace: true });
-        //   });
       })
       .catch((err) => console.log(err));
   };
@@ -135,11 +114,13 @@ const Login = () => {
                 />
               </div>
               <div className="form-control mt-6">
-                <input
-                  type="submit"
-                  value="Login"
-                  className="btn btn-primary"
-                />
+                <button className="btn btn-primary">
+                  {isLoading ? (
+                    <SmallLoader />
+                  ) : (
+                    <input type="submit" value="Login" className="text-base" />
+                  )}
+                </button>
               </div>
             </form>
             <p className=" text-center">

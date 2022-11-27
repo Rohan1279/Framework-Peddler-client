@@ -2,19 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 
 const AllSellers = () => {
-  const [sellerVerification, setSellerVerification] = useState(false);
-
-  // useEffect(() => {
-  //   fetch(`${process.env.REACT_APP_URL}/users/seller/${seller_email}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log();
-  //       setSellerVerification(data.user.isSellerVerified);
-  //     });
-  // }, [seller_email]);
-
+  const [sellerEmail, setSellerEmail] = useState("");
   const url = `${process.env.REACT_APP_URL}/users/allsellers`;
-  const { data: allsellers = [] } = useQuery({
+  const { data: allsellers = [], refetch } = useQuery({
     queryKey: ["allsellers"],
     queryFn: () =>
       fetch(url, {
@@ -24,6 +14,35 @@ const AllSellers = () => {
       }).then((res) => res.json()),
   });
 
+  useEffect(() => {
+    // console.log(sellerEmail);
+    fetch(
+      `${process.env.REACT_APP_URL}/users/allsellers/seller/${sellerEmail}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        refetch();
+        console.log(data);
+        // setSellerVerification(data.user.isSellerVerified);
+      });
+  }, [sellerEmail]);
+
+  // const handleSellerVerify = (seller) => {
+  //   setSellerEmail(seller.email);
+  //   // console.log(sellerEmail);
+  //   verifySeller(sellerEmail);
+  // };
+  // const verifySeller = (email) => {
+  //   console.log(email);
+  // };
+  // console.log(sellerEmail);
+  // console.log(allsellers);
   return (
     <div>
       <h2>All Sellers</h2>
@@ -59,8 +78,18 @@ const AllSellers = () => {
                     >
                       Delete
                     </button>
-
-                    <button className="btn btn-xs btn-info">Verify</button>
+                    {seller.isSellerVerified ? (
+                      <button className="btn btn-xs btn-disabled text-slate-500">
+                        Verified
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-xs btn-info"
+                        onClick={() => setSellerEmail(seller.email)}
+                      >
+                        Verify
+                      </button>
+                    )}
                   </div>
                 </td>
               </tr>

@@ -41,6 +41,9 @@ const DashboradLayout = () => {
                 <li>
                   <Link to={"/dashboard/myproducts"}>My Products</Link>
                 </li>
+                <li>
+                  <Link to={"/dashboard/mybuyers"}>My Buyers</Link>
+                </li>
               </>
             )}
             {isAdmin && (

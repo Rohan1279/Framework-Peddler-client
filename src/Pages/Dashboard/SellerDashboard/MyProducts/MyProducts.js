@@ -46,9 +46,9 @@ const MyProducts = () => {
                   </div>
                 </td>
                 <td>{product.product_name}</td>
-                <td>${product.price}</td>
+                <td>${product.resale_price}</td>
                 <td>
-                  {product.price && !product.paid && (
+                  {product.resale_price && !product.paid && (
                     <Link to={`/dashboard/payment/${product._id}`}>
                       <button className="btn btn-primary btn-xs">Pay</button>
                     </Link>
