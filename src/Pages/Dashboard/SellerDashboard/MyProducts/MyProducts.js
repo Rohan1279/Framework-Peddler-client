@@ -66,7 +66,7 @@ const MyProducts = () => {
                 <td>
                   <div className="avatar placeholder">
                     <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
-                      <img src={product.image} alt="" />
+                      <img src={product.picture} alt="" />
                     </div>
                   </div>
                 </td>
