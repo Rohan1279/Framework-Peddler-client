@@ -15,17 +15,17 @@ const ConfirmationModal = ({
         <div className="modal-box rounded-none">
           <h3 className="font-bold text-xl text-center">{title}</h3>
           <p className="py-4 text-center">{message}</p>
-          <div className="modal-action">
+          <div className="modal-action flex items-center justify-center">
             <label
               onClick={() => successAction(modalData)}
               htmlFor="confirmation-modal"
-              className="btn rounded-none btn-error"
+              className="btn  rounded-none btn-sm btn-error hover:bg-red-400 hover:text-white"
             >
               {successButtonName}
             </label>
             <button
               onClick={closeModal}
-              className="btn btn-outline rounded-none"
+              className="btn  btn-outline btn-sm rounded-none"
             >
               Cancel
             </button>

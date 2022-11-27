@@ -7,7 +7,7 @@ import useSeller from "../../hooks/useSeller";
 const SellerRoute = ({ children }) => {
   const { user, loading } = useContext(Authcontext);
   const [isSeller, isSellerLoading] = useSeller(user?.email);
-  console.log(isSeller);
+  // console.log(isSeller);
   const location = useLocation();
   if (loading || isSellerLoading) {
     return <Loader />;

@@ -19,9 +19,9 @@ const Login = () => {
   const [userEmail, setUserEmail] = useState("");
   const [token] = useToken(userEmail);
   const [isLoading, setIsLoading] = useState(false);
-  if (token !== "") {
+  if (token) {
     navigate(from, { replace: true });
-    setIsLoading(false);
+    // setIsLoading(false);
     // toast.success("Login successfull");
   } else {
     // logOut();
@@ -38,7 +38,7 @@ const Login = () => {
     fetch(`${process.env.REACT_APP_URL}/users?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.user);
+        // console.log(data.user);
         const user = data.user;
         if (user) {
           login(email, password)
@@ -48,7 +48,7 @@ const Login = () => {
                 email: user.email,
               };
               setUserEmail(user?.email);
-              console.log("after login", token);
+              // console.log("after login", token);
               toast.success("Login successfull");
             })
             .catch((err) => {
@@ -65,14 +65,14 @@ const Login = () => {
     authenticateWithProvider(provider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         saveUser(result?.user.displayName, result?.user.email, "Buyer");
       })
       .catch((err) => console.log(err));
   };
   const saveUser = (name, email, userRole) => {
     const user = { name, email, userRole };
-    console.log(user);
+    // console.log(user);
     // fetch(`${process.env.REACT_APP_URL}/users`, {
     //   method: "POST",
     //   headers: {

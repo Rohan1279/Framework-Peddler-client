@@ -16,9 +16,6 @@ const AddProduct = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // 637eb96cdd59c8779cf07ba7
-  // 637eb96cdd59c8779cf07ba8
-  // 637eb96cdd59c8779cf07ba9
   const [sellerInfo, SetsellerInfo] = useState([]);
   useEffect(() => {}, []);
 
@@ -56,7 +53,8 @@ const AddProduct = () => {
       seller_email: user?.email,
       seller_default_image:
         "https://static.vecteezy.com/system/resources/thumbnails/009/312/919/small/3d-render-cute-girl-sit-crossed-legs-hold-laptop-studying-at-home-png.png",
-      // isVerified: false,
+      isSold: false,
+      isAdvertised: false
     };
     // console.log(product);
     fetch(`${process.env.REACT_APP_URL}/products`, {

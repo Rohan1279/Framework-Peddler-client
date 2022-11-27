@@ -154,7 +154,7 @@ const Navbar = () => {
           )}
 
           {/* swap theme begins*/}
-          <label className="swap swap-rotate mr-4 shadow-md p-1 rounded-lg ">
+          <label className="swap  swap-rotate mr-4 shadow-md p-1 rounded-lg ">
             <input type="checkbox" />
 
             <svg
@@ -176,9 +176,9 @@ const Navbar = () => {
           {/* swap theme ends*/}
 
           {user?.email && user?.uid ? (
-            <div className="bg-[#fde4cf] hidden lg:block  px-2 py-1 rounded-lg mx-3 shadow-md">
-              <h4>Welcome,</h4>
-              <p className="font-bold">{user?.displayName}</p>
+            <div className="bg-[#fde4cf] hidden lg:block  px-2 py-1 rounded-lg mx-3 shadow-md ">
+              <h4 className="text-black">Welcome,</h4>
+              <p className="font-bold text-black">{user?.displayName}</p>
             </div>
           ) : (
             <>

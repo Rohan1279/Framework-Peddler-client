@@ -44,7 +44,6 @@ const AllSellers = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data[0]);
         refetch();
         if (data[0].deletedCount > 0) {
           toast.success(`${seller.name}'s account deleted successfully`);
@@ -87,13 +86,13 @@ const AllSellers = () => {
                   <div>
                     <label
                       htmlFor="confirmation-modal"
-                      className="btn btn-xs btn-error mr-3"
+                      className="btn btn-xs btn-error mr-3 rounded-none"
                       onClick={() => setDeletingSeller(seller)}
                     >
                       Delete
                     </label>
                     {seller.isSellerVerified ? (
-                      <button className="btn btn-xs btn-disabled text-slate-500">
+                      <button className="btn btn-xs btn-disabled text-slate-500 rounded-none">
                         Verified
                       </button>
                     ) : (
