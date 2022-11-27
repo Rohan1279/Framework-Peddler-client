@@ -1,12 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import ConfirmationModal from "../../../../Components/ConfirmationModal";
 import { Authcontext } from "../../../../contexts/AuthProvider";
 
 const AllBuyers = () => {
   // const { user } = useContext(Authcontext);
+  const [deletingBuyer, setDeletingBuyer] = useState(null);
+
   const url = `${process.env.REACT_APP_URL}/users/allbuyers`;
-  const { data: allbuyers = [] } = useQuery({
+  const { data: allbuyers = [], refetch } = useQuery({
     queryKey: ["allbuyers"],
     queryFn: () =>
       fetch(url, {
@@ -16,7 +20,24 @@ const AllBuyers = () => {
       }).then((res) => res.json()),
   });
   const handleDelete = (buyer) => {
-    console.log(buyer);
+    console.log(deletingBuyer);
+    fetch(`${process.env.REACT_APP_URL}/admin/buyer/${buyer._id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          toast.success(`${buyer.name} deleted successfully`);
+          refetch();
+        }
+      });
+    console.log();
+  };
+  const closeModal = () => {
+    setDeletingBuyer(null);
   };
   return (
     <div>
@@ -47,12 +68,13 @@ const AllBuyers = () => {
                 <td>${buyer.email}</td>
                 <td>
                   <div>
-                    <button
-                      // onClick={()=>}
+                    <label
+                      htmlFor="confirmation-modal"
                       className="btn btn-sm btn-error"
+                      onClick={() => setDeletingBuyer(buyer)}
                     >
                       Delete
-                    </button>
+                    </label>
                   </div>
                 </td>
               </tr>
@@ -60,6 +82,16 @@ const AllBuyers = () => {
           </tbody>
         </table>
       </div>
+      {deletingBuyer && (
+        <ConfirmationModal
+          title={`Are you sure you want to delete ${deletingBuyer.name}?`}
+          message={`Action cannot be undone`}
+          successAction={handleDelete}
+          closeModal={closeModal}
+          modalData={deletingBuyer}
+          successButtonName="Delete"
+        />
+      )}
     </div>
   );
 };

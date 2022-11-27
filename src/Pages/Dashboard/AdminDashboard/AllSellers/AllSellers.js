@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import ConfirmationModal from "../../../../Components/ConfirmationModal";
 
 const AllSellers = () => {
   const [sellerEmail, setSellerEmail] = useState("");
-  const url = `${process.env.REACT_APP_URL}/users/allsellers`;
+  const [deletingSeller, setDeletingSeller] = useState(null);
+  const url = `${process.env.REACT_APP_URL}/admin/allsellers`;
   const { data: allsellers = [], refetch } = useQuery({
     queryKey: ["allsellers"],
     queryFn: () =>
@@ -15,7 +18,6 @@ const AllSellers = () => {
   });
 
   useEffect(() => {
-    // console.log(sellerEmail);
     fetch(
       `${process.env.REACT_APP_URL}/users/allsellers/seller/${sellerEmail}`,
       {
@@ -29,20 +31,31 @@ const AllSellers = () => {
       .then((data) => {
         refetch();
         console.log(data);
-        // setSellerVerification(data.user.isSellerVerified);
       });
-  }, [sellerEmail]);
+  }, [sellerEmail, refetch]);
 
-  // const handleSellerVerify = (seller) => {
-  //   setSellerEmail(seller.email);
-  //   // console.log(sellerEmail);
-  //   verifySeller(sellerEmail);
-  // };
-  // const verifySeller = (email) => {
-  //   console.log(email);
-  // };
-  // console.log(sellerEmail);
-  // console.log(allsellers);
+  const handleDelete = (seller) => {
+    // console.log(seller);
+    fetch(`${process.env.REACT_APP_URL}/admin/seller/${seller.email}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data[0]);
+        refetch();
+        if (data[0].deletedCount > 0) {
+          toast.success(`${seller.name}'s account deleted successfully`);
+          refetch();
+        }
+      });
+    console.log();
+  };
+  const closeModal = () => {
+    setDeletingSeller(null);
+  };
   return (
     <div>
       <h2>All Sellers</h2>
@@ -72,12 +85,13 @@ const AllSellers = () => {
                 <td>${seller.email}</td>
                 <td>
                   <div>
-                    <button
-                      // onClick={()=>}
+                    <label
+                      htmlFor="confirmation-modal"
                       className="btn btn-xs btn-error mr-3"
+                      onClick={() => setDeletingSeller(seller)}
                     >
                       Delete
-                    </button>
+                    </label>
                     {seller.isSellerVerified ? (
                       <button className="btn btn-xs btn-disabled text-slate-500">
                         Verified
@@ -97,6 +111,17 @@ const AllSellers = () => {
           </tbody>
         </table>
       </div>
+
+      {deletingSeller && (
+        <ConfirmationModal
+          title={`Are you sure you want to delete ${deletingSeller.name}?`}
+          message={`Action cannot be undone`}
+          successAction={handleDelete}
+          closeModal={closeModal}
+          modalData={deletingSeller}
+          successButtonName="Delete"
+        />
+      )}
     </div>
   );
 };

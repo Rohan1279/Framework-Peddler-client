@@ -7,6 +7,7 @@ import { Authcontext } from "../../../../contexts/AuthProvider";
 
 const AddProduct = () => {
   const { user } = useContext(Authcontext);
+  console.log(user);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,6 +51,7 @@ const AddProduct = () => {
       usage_period: data.usage_period,
       year_purchased: data.year_purchased,
       posted_on,
+      seller_id: user?.uid,
       seller_name: user?.displayName,
       seller_email: user?.email,
       seller_default_image:

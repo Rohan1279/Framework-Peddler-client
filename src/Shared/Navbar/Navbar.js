@@ -37,11 +37,13 @@ const Navbar = () => {
                   Main
                 </Link>
               </li>
-              <li>
-                <Link className="px-1 py-2" to={"/dashboard"}>
-                  Dashboard
-                </Link>
-              </li>
+              {user?.email && (
+                <li>
+                  <Link className="px-1 py-2" to={"/dashboard"}>
+                    Dashboard
+                  </Link>
+                </li>
+              )}
               {/* {user?.email && (
                 <>
                   <li>

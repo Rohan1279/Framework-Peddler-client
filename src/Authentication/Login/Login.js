@@ -11,35 +11,54 @@ const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 const Login = () => {
-  const { loading, login, authenticateWithProvider } = useContext(Authcontext);
+  const { loading, login, authenticateWithProvider, logOut } =
+    useContext(Authcontext);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
-  const [createUserEmail, setCreatedUserEmail] = useState("");
-  const [token] = useToken(createUserEmail);
+  const [userEmail, setUserEmail] = useState("");
+  const [token] = useToken(userEmail);
   const [isLoading, setIsLoading] = useState(false);
-
-  if (token) {
+  if (token !== "") {
     navigate(from, { replace: true });
+    setIsLoading(false);
+    // toast.success("Login successfull");
+  } else {
+    // logOut();
   }
+
   const handleLogin = (e) => {
     e.preventDefault();
     setIsLoading(true);
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    login(email, password)
-      .then((result) => {
-        const user = result.user;
-        setCreatedUserEmail(user.email);
-        const currentUser = {
-          email: user.email,
-        };
-        toast.success("Login successfull");
-      })
-      .catch((err) => {
-        toast.error(err.message);
-        setIsLoading(false);
+
+    // check if user exist in database
+    fetch(`${process.env.REACT_APP_URL}/users?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.user);
+        const user = data.user;
+        if (user) {
+          login(email, password)
+            .then((result) => {
+              const user = result.user;
+              const currentUser = {
+                email: user.email,
+              };
+              setUserEmail(user?.email);
+              console.log("after login", token);
+              toast.success("Login successfull");
+            })
+            .catch((err) => {
+              toast.error(err.message);
+              setIsLoading(false);
+            });
+        } else {
+          toast.error("Please create an account first");
+          setIsLoading(false);
+        }
       });
   };
   const handleAuthenticate = (provider) => {
