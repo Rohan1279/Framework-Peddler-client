@@ -73,9 +73,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/payment/:id",
-        loader: ({ params }) => {
-          fetch(`${process.env.REACT_APP_URL}/orders/${params.id}`);
-        },
+        loader: ({ params }) =>
+          fetch(`${process.env.REACT_APP_URL}/orders/${params.id}`),
         element: (
           <BuyerRoute>
             <Payment />

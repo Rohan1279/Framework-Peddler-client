@@ -7,6 +7,7 @@ import { Authcontext } from "../../../contexts/AuthProvider";
 
 const CategoryProducts = () => {
   const products = useLoaderData();
+  console.log(products);
   // const {
   //   data: products = [],
   //   refetch,

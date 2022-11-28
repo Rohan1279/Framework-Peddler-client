@@ -5,7 +5,7 @@ import { Authcontext } from "../../../../contexts/AuthProvider";
 
 const MyOrders = () => {
   const { user } = useContext(Authcontext);
-  const url = `http://localhost:5000/orders?email=${user?.email}`;
+  const url = `${process.env.REACT_APP_URL}/orders?email=${user?.email}`;
   const { data: orders = [] } = useQuery({
     queryKey: ["orders", user?.email],
     queryFn: () =>
@@ -43,13 +43,12 @@ const MyOrders = () => {
                 <td>{order.product_name}</td>
                 <td>${order.price}</td>
                 <td>
-                  {order.price && !order.paid && (
+                  {order.isPaid ? (
+                    <span className="text-primary">Paid</span>
+                  ) : (
                     <Link to={`/dashboard/payment/${order._id}`}>
                       <button className="btn btn-primary btn-xs">Pay</button>
                     </Link>
-                  )}
-                  {order.price && order.paid && (
-                    <span className="text-primary">Paid</span>
                   )}
                 </td>
               </tr>
