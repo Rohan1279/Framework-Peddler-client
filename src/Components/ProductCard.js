@@ -7,7 +7,6 @@ import BookingModal from "./BookingModal";
 const ProductCard = ({ product, setProduct }) => {
   const [sellerVerification, setSellerVerification] = useState(false);
   const [reportedProduct, setReportedProduct] = useState("");
-
   const {
     category_name,
     picture,
@@ -23,6 +22,7 @@ const ProductCard = ({ product, setProduct }) => {
     seller_email,
     seller_name,
     seller_default_image,
+    isPaid,
     // isVerified,
   } = product;
   console.log(reportedProduct);
@@ -37,12 +37,15 @@ const ProductCard = ({ product, setProduct }) => {
 
   useEffect(() => {
     // console.log(advertisingProduct);
-    fetch(`${process.env.REACT_APP_URL}/products/reportproduct/reportproduct?=${reportedProduct}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+    fetch(
+      `${process.env.REACT_APP_URL}/products/reportproduct/reportproduct?=${reportedProduct}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -54,73 +57,77 @@ const ProductCard = ({ product, setProduct }) => {
       });
   }, [reportedProduct]);
   // console.log(sellerVerification);
-  return (
-    <div className="card lg:card-side shadow-xl rounded-none">
-      <figure className="lg:w-1/3 ">
-        <img src={picture} alt="Album" className="w-[400px] h-[400px]" />
-      </figure>
-      <div className="lg:px-3 lg:w-2/3  text-left ">
-        <p className="badge badge-secondary">{condition}</p>
-        <h2 className="text-2xl text-left font-bold">{product_name}</h2>
-        <span
-          onClick={() => setReportedProduct(product._id)}
-          className="tooltip active:text-red-400"
-          data-tip="Report product"
-        >
-          <HiDocumentReport />
-        </span>
-        <p className="text-lg text-left  leading-normal">{description}</p>
-        <div className="flex items-center justify-between my-3">
-          <div className="flex text-base items-center">
-            <HiLocationMarker />
-            <p className="text-purple-400">{location}</p>
+  if (!isPaid) {
+    return (
+      <div className="card lg:card-side shadow-xl rounded-none">
+        <figure className="lg:w-1/3 ">
+          <img src={picture} alt="Album" className="w-[400px] h-[400px]" />
+        </figure>
+        <div className="lg:px-3 lg:w-2/3  text-left ">
+          <p className="badge badge-secondary">{condition}</p>
+          <h2 className="text-2xl text-left font-bold">{product_name}</h2>
+          <span
+            onClick={() => setReportedProduct(product._id)}
+            className="tooltip active:text-red-400"
+            data-tip="Report product"
+          >
+            <HiDocumentReport />
+          </span>
+          <p className="text-lg text-left  leading-normal">{description}</p>
+          <div className="flex items-center justify-between my-3">
+            <div className="flex text-base items-center">
+              <HiLocationMarker />
+              <p className="text-purple-400">{location}</p>
+            </div>
+            <div className="text-base flex items-center justify-center">
+              <HiClock />
+              <p>{posted_on ? posted_on : "1 year ago"}</p>
+            </div>
           </div>
-          <div className="text-base flex items-center justify-center">
-            <HiClock />
-            <p>{posted_on ? posted_on : "1 year ago"}</p>
+          <div className="lg:flex items-center justify-between">
+            <div className="avatar  flex items-center justify-center">
+              <div className="w-12 rounded-full ring mr-3 indicator ">
+                <img src={seller_default_image} alt="" className="" />
+              </div>
+
+              <p className="text-2xl mr-3">{seller_name}</p>
+              {sellerVerification && (
+                <FaCheckCircle className="text-blue-400" />
+              )}
+            </div>
+            <p className="text-lg badge badge-info px-2 py-3">
+              Purchased on: <span className="font-bold">{year_purchased}</span>
+            </p>
           </div>
-        </div>
-        <div className="lg:flex items-center justify-between">
-          <div className="avatar  flex items-center justify-center">
-            <div className="w-12 rounded-full ring mr-3 indicator ">
-              <img src={seller_default_image} alt="" className="" />
+          <div className="my-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <span className="rounded-sm bg-red-400 mx-2 line-through px-2 py-1 text-2xl text-black">
+                  ${original_price}
+                </span>
+                <span className="rounded-sm bg-green-400 mx-2 text-black px-5 py-2 text-2xl ">
+                  ${resale_price}
+                </span>
+              </div>
+              <span className="hidden lg:block badge badge-accent">
+                Used for {usage_period}
+              </span>
             </div>
 
-            <p className="text-2xl mr-3">{seller_name}</p>
-            {sellerVerification && <FaCheckCircle className="text-blue-400" />}
-          </div>
-          <p className="text-lg badge badge-info px-2 py-3">
-            Purchased on: <span className="font-bold">{year_purchased}</span>
-          </p>
-        </div>
-        <div className="my-6">
-          <div className="flex justify-between items-center">
-            <div>
-              <span className="rounded-sm bg-red-400 mx-2 line-through px-2 py-1 text-2xl text-black">
-                ${original_price}
-              </span>
-              <span className="rounded-sm bg-green-400 mx-2 text-black px-5 py-2 text-2xl ">
-                ${resale_price}
-              </span>
+            <div className="card-body">
+              <label
+                htmlFor="booking-modal"
+                className="btn btn-outline rounded-md"
+                onClick={() => setProduct(product)}
+              >
+                Book now!
+              </label>
             </div>
-            <span className="hidden lg:block badge badge-accent">
-              Used for {usage_period}
-            </span>
-          </div>
-
-          <div className="card-body">
-            <label
-              htmlFor="booking-modal"
-              className="btn btn-outline rounded-md"
-              onClick={() => setProduct(product)}
-            >
-              Book now!
-            </label>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default ProductCard;
