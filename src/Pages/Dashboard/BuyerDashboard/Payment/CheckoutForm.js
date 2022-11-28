@@ -1,5 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const CheckoutForm = ({ order }) => {
   const [cardError, setCardError] = useState("");
@@ -9,7 +10,7 @@ const CheckoutForm = ({ order }) => {
   const [clientSecret, setClientSecret] = useState();
   const stripe = useStripe();
   const elements = useElements();
-  const { price, email, buyer, _id } = order;
+  const { price, email, buyer, _id, product_id } = order;
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     fetch(`${process.env.REACT_APP_URL}/create-payment-intent`, {
@@ -72,6 +73,7 @@ const CheckoutForm = ({ order }) => {
         transactionId: paymentIntent.id,
         email,
         bookingId: _id,
+        product_id,
       };
       fetch(`${process.env.REACT_APP_URL}/payments`, {
         method: "POST",
@@ -91,6 +93,7 @@ const CheckoutForm = ({ order }) => {
         });
     }
     setProcessing(false);
+    toast.success("Payment successfull");
   };
   return (
     <>

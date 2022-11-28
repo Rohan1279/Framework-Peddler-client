@@ -20,7 +20,7 @@ const Payment = () => {
       {/* <p className="text-3xl">Please pay</p> */}
       <div className="w-96 my-12">
         <Elements stripe={stripePromise}>
-          <CheckoutForm order={order} />
+          <CheckoutForm order={order}  />
         </Elements>
       </div>
     </div>

@@ -37,7 +37,7 @@ const ProductCard = ({ product, setProduct }) => {
 
   useEffect(() => {
     // console.log(advertisingProduct);
-    fetch(`${process.env.REACT_APP_URL}/products?product=${reportedProduct}`, {
+    fetch(`${process.env.REACT_APP_URL}/products/reportproduct/reportproduct?=${reportedProduct}`, {
       method: "PUT",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
