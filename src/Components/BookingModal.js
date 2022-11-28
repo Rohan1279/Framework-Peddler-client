@@ -14,12 +14,15 @@ const BookingModal = ({ product, setProduct }) => {
     const location = form.location.value;
     const order = {
       product_name: product?.product_name,
+      product_id : product?._id,
       price: product?.resale_price,
       image: product?.picture,
       buyer: name,
       email,
       phone,
       location,
+      seller_email: product.seller_email,
+      seller_id: product.seller_id,
     };
     setProduct(null);
     console.log(order);

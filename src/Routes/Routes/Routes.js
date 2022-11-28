@@ -18,6 +18,7 @@ import AllBuyers from "../../Pages/Dashboard/AdminDashboard/AllBuyers/AllBuyers"
 import AllSellers from "../../Pages/Dashboard/AdminDashboard/AllSellers/AllSellers";
 import ReportedItems from "../../Pages/Dashboard/AdminDashboard/ReportedItems/ReportedItems";
 import MyBuyers from "../../Pages/Dashboard/SellerDashboard/MyBuyers/MyBuyers";
+import Payment from "../../Pages/Dashboard/BuyerDashboard/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -67,6 +68,17 @@ export const router = createBrowserRouter([
         element: (
           <BuyerRoute>
             <MyOrders />
+          </BuyerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/payment/:id",
+        loader: ({ params }) => {
+          fetch(`${process.env.REACT_APP_URL}/orders/${params.id}`);
+        },
+        element: (
+          <BuyerRoute>
+            <Payment />
           </BuyerRoute>
         ),
       },

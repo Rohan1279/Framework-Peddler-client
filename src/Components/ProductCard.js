@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaAmazon, FaCheck, FaCheckCircle } from "react-icons/fa";
-import { HiClock, HiLocationMarker } from "react-icons/hi";
+import { HiClock, HiDocumentReport, HiLocationMarker } from "react-icons/hi";
 import BookingModal from "./BookingModal";
 
 const ProductCard = ({ product, setProduct }) => {
   const [sellerVerification, setSellerVerification] = useState(false);
+  const [reportedProduct, setReportedProduct] = useState("");
 
   const {
     category_name,
@@ -23,6 +25,7 @@ const ProductCard = ({ product, setProduct }) => {
     seller_default_image,
     // isVerified,
   } = product;
+  console.log(reportedProduct);
   useEffect(() => {
     fetch(`${process.env.REACT_APP_URL}/users/seller/${seller_email}`)
       .then((res) => res.json())
@@ -31,6 +34,25 @@ const ProductCard = ({ product, setProduct }) => {
         setSellerVerification(data.user.isSellerVerified);
       });
   }, [seller_email]);
+
+  useEffect(() => {
+    // console.log(advertisingProduct);
+    fetch(`${process.env.REACT_APP_URL}/products?product=${reportedProduct}`, {
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount) {
+          toast.success("Prodcut is reported successfully");
+        }
+        // setAdvertisingProduct("");
+        // refetch();
+      });
+  }, [reportedProduct]);
   // console.log(sellerVerification);
   return (
     <div className="card lg:card-side shadow-xl rounded-none">
@@ -40,6 +62,13 @@ const ProductCard = ({ product, setProduct }) => {
       <div className="lg:px-3 lg:w-2/3  text-left ">
         <p className="badge badge-secondary">{condition}</p>
         <h2 className="text-2xl text-left font-bold">{product_name}</h2>
+        <span
+          onClick={() => setReportedProduct(product._id)}
+          className="tooltip active:text-red-400"
+          data-tip="Report product"
+        >
+          <HiDocumentReport />
+        </span>
         <p className="text-lg text-left  leading-normal">{description}</p>
         <div className="flex items-center justify-between my-3">
           <div className="flex text-base items-center">
