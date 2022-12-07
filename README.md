@@ -1,6 +1,6 @@
 ## **Framework peddler**
 
-**Live site link** : [Web Dev Untangled](https://framework-peddler-cd2e3.web.app/)
+**Live site link** : [Framework peddler](https://framework-peddler-cd2e3.web.app/)
 
 **Website's feature:**
 
