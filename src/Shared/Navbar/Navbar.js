@@ -67,7 +67,7 @@ const Navbar = () => {
           </div>
           <Link
             to={"/"}
-            className=" normal-case text-2xl text-white hidden lg:block leading-10 bg-blue-300 px-2 py-1 rounded-lg hover:bg-blue-400 active:scale-95 transition-all"
+            className=" normal-case text-2xl rounded-none text-white hidden lg:block leading-10 bg-amber-400 px-2 py-1  hover:bg-amber-500 active:scale-95 transition-all"
           >
             <div className="flex justify-between items-center">
               {/* <img
@@ -75,7 +75,7 @@ const Navbar = () => {
                 alt=""
                 className="w-12 h-12 rounded-full  mr-2"
               /> */}
-              <p className="font-bold font">Framework Peddler</p>
+              <p className="font-bold font text-black">Framework Peddler</p>
             </div>
           </Link>
         </div>
@@ -116,7 +116,7 @@ const Navbar = () => {
         <div className="navbar-center">
           <Link
             to={"/"}
-            className=" normal-case text-xl block lg:hidden leading-10 bg-amber-300 px-2 py-1 rounded-lg hover:bg-amber-400 active:scale-95 transition-all"
+            className=" rounded-none normal-case text-xl block lg:hidden leading-10 bg-amber-300 px-2 py-1 hover:bg-amber-400 active:scale-95 transition-all"
           >
             <div className="flex justify-between items-center">
               {/* <img
@@ -124,7 +124,7 @@ const Navbar = () => {
                 alt=""
                 className="w-12 h-12 rounded-full mr-2 hidden lg:block"
               /> */}
-              <p className="font-bold">Framework Peddler</p>
+              <p className="font-bold text-black">Framework Peddler</p>
             </div>
           </Link>
         </div>
@@ -176,7 +176,7 @@ const Navbar = () => {
           {/* swap theme ends*/}
 
           {user?.email && user?.uid ? (
-            <div className="bg-[#fde4cf] hidden lg:block  px-2 py-1 rounded-lg mx-3 shadow-md ">
+            <div className="bg-amber-300 rounded-none hidden lg:block  px-2 py-1 mx-3 shadow-md ">
               <h4 className="text-black">Welcome,</h4>
               <p className="font-bold text-black">{user?.displayName}</p>
             </div>
@@ -194,7 +194,7 @@ const Navbar = () => {
           <div className="dropdown dropdown-end ">
             <label
               tabIndex={0}
-              className="avatar tooltip tooltip-bottom"
+              className="avatar tooltip tooltip-bottom z-50"
               data-tip={`${
                 user?.displayName ? user.displayName : "Please, login"
               }`}

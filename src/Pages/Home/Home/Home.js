@@ -6,7 +6,7 @@ import ExtraSection from "../ExtraSection/ExtraSection";
 
 const Home = () => {
   return (
-    <div className="px-16">
+    <div className="px-2">
       <Banner />
       <Advertisement />
       <Categories />

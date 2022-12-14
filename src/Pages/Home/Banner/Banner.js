@@ -1,127 +1,87 @@
-import React from "react";
+import { Transition } from "@headlessui/react";
+import React, { useState } from "react";
 
 const Banner = () => {
+  const [isShowing, setIsShowing] = useState(true);
+
   return (
-    <div className="mb-16  py-8">
-      <div className="bg-gray-100">
-        <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-          <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
-            <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
-              <span className="relative inline-block">
-                <svg
-                  viewBox="0 0 52 24"
-                  fill="currentColor"
-                  className="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-gray-400 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block"
-                >
-                  <defs>
-                    <pattern
-                      id="dc223fcc-6d72-4ebc-b4ef-abe121034d6e"
-                      x="0"
-                      y="0"
-                      width=".135"
-                      height=".30"
-                    >
-                      <circle cx="1" cy="1" r=".7" />
-                    </pattern>
-                  </defs>
-                  <rect
-                    fill="url(#dc223fcc-6d72-4ebc-b4ef-abe121034d6e)"
-                    width="52"
-                    height="24"
-                  />
-                </svg>
-                <span className="relative">The</span>
-              </span>{" "}
-              quick, brown fox jumps over a lazy dog
-            </h2>
-            <p className="text-base text-gray-700 md:text-lg">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque rem aperiam, eaque ipsa quae.
+    
+
+    <section className="relative bg-[url(https://i.ibb.co/mJ5H4tz/ezgif-com-gif-maker.jpg)] bg-cover bg-no-repeat">
+      <Transition
+    appear={true}
+    show={isShowing}
+    enter="transition-all duration-[2000ms] "
+    enterFrom="opacity-100 "
+    enterTo="opacity-0  "
+    className="font-bold"
+  >
+
+      <div className="absolute inset-0 bg-white/100 sm:bg-transparent bg-gradient-to-r from-cyan-600 to-blue-300 "></div>
+
+  </Transition>
+
+      <div className="relative max-w-screen-xl py-32 sm:px-6 lg:flex lg:h-screen lg:items-center">
+        <div className="p-12 mr-auto max-w-xl text-center sm:text-left">
+          <Transition
+            appear={true}
+            show={isShowing}
+            enter="transition-all duration-1000 "
+            enterFrom="opacity-0 translate-y-12"
+            enterTo="opacity-100"
+            className="font-bold"
+          >
+            {/* Your content goes here*/}
+            <h1 className="text-6xl font-extrabold text-black sm:text-4xl">
+              Let us find your
+              <strong className="block font-extrabold text-rose-700 ">
+                best hardware
+              </strong>
+            </h1>
+            <p className="mt-4 max-w-lg sm:text-xl sm:leading-relaxed text-gray-200">
+              A all in one trade-off solution for your favorite day-to-day used
+              laptop.
             </p>
-          </div>
-          <div className="flex items-center sm:justify-center">
-            <button
-              type="submit"
-              className="btn inline-flex items-center justify-center h-12 px-6 mr-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-            >
-              Get started
-            </button>
-            <a
-              href="/"
-              aria-label=""
-              className="inline-flex items-center font-semibold text-gray-800 transition-colors duration-200 hover:text-deep-purple-accent-700"
-            >
-              Learn more
-            </a>
-          </div>
+          </Transition>
+          <Transition
+            appear={true}
+            show={isShowing}
+            enter="transition-all duration-[1000ms] "
+            enterFrom="opacity-0 w-10"
+            enterTo="opacity-100 w-full"
+            className="font-bold"
+          >
+            <hr className="mt-5 border-red-500 " />
+          </Transition>
+          <Transition
+            appear={true}
+            show={isShowing}
+            enter="transition-all duration-1000 delay-1000"
+            enterFrom="opacity-0 "
+            enterTo="opacity-100 "
+            className="font-bold"
+          >
+            <div className="mt-8 flex flex-wrap gap-4 text-center">
+              <a
+                href="#"
+                className="block w-full rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
+              >
+                Get Started
+              </a>
+
+              <a
+                href="#"
+                className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto"
+              >
+                Learn More
+              </a>
+            </div>
+          </Transition>
         </div>
       </div>
-      <div className="relative px-4 sm:px-0">
-        <div className="absolute inset-0 bg-gray-100 h-1/2" />
-        <div className="relative grid mx-auto overflow-hidden bg-white divide-y rounded shadow sm:divide-y-0 sm:divide-x sm:max-w-screen-sm sm:grid-cols-3 lg:max-w-screen-md">
-          <div className="inline-block p-8 text-center">
-            <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-indigo-50">
-              <svg
-                className="w-10 h-10 text-deep-purple-accent-400"
-                stroke="currentColor"
-                viewBox="0 0 52 52"
-              >
-                <polygon
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                  points="29 13 14 29 25 29 23 39 38 23 27 23"
-                />
-              </svg>
-            </div>
-            <p className="font-bold tracking-wide text-gray-800">
-              Make it better
-            </p>
-          </div>
-          <div className="inline-block p-8 text-center">
-            <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-indigo-50">
-              <svg
-                className="w-10 h-10 text-deep-purple-accent-400"
-                stroke="currentColor"
-                viewBox="0 0 52 52"
-              >
-                <polygon
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                  points="29 13 14 29 25 29 23 39 38 23 27 23"
-                />
-              </svg>
-            </div>
-            <p className="font-bold tracking-wide text-gray-800">
-              Do it faster
-            </p>
-          </div>
-          <div className="inline-block p-8 text-center">
-            <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-indigo-50">
-              <svg
-                className="w-10 h-10 text-deep-purple-accent-400"
-                stroke="currentColor"
-                viewBox="0 0 52 52"
-              >
-                <polygon
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                  points="29 13 14 29 25 29 23 39 38 23 27 23"
-                />
-              </svg>
-            </div>
-            <p className="font-bold tracking-wide text-gray-800">
-              Working harder
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    </section>
+
+  
   );
 };
 
