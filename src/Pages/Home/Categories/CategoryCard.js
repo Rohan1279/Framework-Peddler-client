@@ -50,9 +50,6 @@ const CategoryCard = ({ category }) => {
           <img
             src={category.categoryImage}
             alt="Category"
-            className={`
-            
-            brightness-90 hover:brightness-110 transition-all duration-300`}
           />
         </figure>
       </div>
