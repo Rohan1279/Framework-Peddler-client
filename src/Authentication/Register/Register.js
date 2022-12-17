@@ -1,5 +1,6 @@
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useRef, useState } from "react";
+import { FileUploader } from "react-drag-drop-files";
 import toast from "react-hot-toast";
 import { FaAppStore, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -19,6 +20,8 @@ const Register = () => {
   const [token] = useToken(createUserEmail);
   const [userRole, setUserRole] = useState("Buyer");
   const [isLoading, setIsLoading] = useState(false);
+  const fileTypes = ["JPG", "PNG", "GIF"];
+
   const buyerRef = useRef();
   const sellerRef = useRef();
   if (token) {
@@ -120,17 +123,22 @@ const Register = () => {
                 <span>Drag and drop your</span>&nbsp;
                 <span>files anywhere or</span>
               </p>
-              <input
+              <button class="w-auto px-2 py-1 my-2 mr-2 transition duration-500 ease-in-out transform border rounded-md text-blueGray-500 hover:text-blueGray-600 text-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blueGray-100">
+                Upload a file
+              </button>
+              <FileUploader
+                // handleChange={handleChange}
+                name="file"
+                types={fileTypes}
+              />
+              {/* <input
                 type="file"
                 id="image"
                 name="image"
                 accept="image/*"
-                className=""
+                className="mx-auto"
                 required
-              />
-              <button class="w-auto px-2 py-1 my-2 mr-2 transition duration-500 ease-in-out transform border rounded-md text-blueGray-500 hover:text-blueGray-600 text-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blueGray-100">
-                Upload a file
-              </button>
+              /> */}
             </header>
           </section>
           <div className="form-control">
@@ -207,7 +215,7 @@ const Register = () => {
           <div className="divider ">OR</div>
           <div className="flex  mx-auto gap-x-10">
             <FaGoogle
-              className="text-4xl text-white bg-gray-500 p-2 rounded-full"
+              className="text-4xl text-white bg-blue-400 p-2 rounded-full"
               onClick={() => handleAuthenticate(googleProvider)}
             />
             <FaGithub
